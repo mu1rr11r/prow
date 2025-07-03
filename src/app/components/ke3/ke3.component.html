@@ -1,0 +1,51 @@
+<div class="container mt-4">
+  <h2 class="text-center text-primary mb-4">
+    تسجيل الحضور - القاعة {{ classroomName || '...' }}
+  </h2>
+
+  <p class="text-center fst-italic">
+    التاريخ: {{ today | date:'fullDate' }}
+  </p>
+
+  <table class="table table-bordered text-center" *ngIf="!loading; else loadingTpl">
+    <thead class="table-primary">
+      <tr>
+        <th>اسم الطالب</th>
+        <th>حضور</th>
+        <th>غياب</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students; let i = index">
+        <td>{{ student.name }}</td>
+        <td>
+          <input
+            type="checkbox"
+            [(ngModel)]="student.present"
+            (change)="student.absent = !student.present"
+            name="present{{i}}"
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            [(ngModel)]="student.absent"
+            (change)="student.present = !student.absent"
+            name="absent{{i}}"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #loadingTpl>
+    <p class="text-center">جاري تحميل البيانات...</p>
+  </ng-template>
+
+  <div *ngIf="!loading && students.length === 0" class="text-center mt-4 text-danger">
+    لا يوجد طلاب للعرض.
+  </div>
+
+  <div class="text-center mb-5" *ngIf="students.length > 0">
+  </div>
+</div>

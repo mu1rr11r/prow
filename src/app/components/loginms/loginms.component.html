@@ -1,0 +1,40 @@
+<div class="container mt-5" style="max-width: 450px;">
+  <h2 class="text-center mb-4 text-primary fw-bold">تسجيل دخول المدير</h2>
+
+  <form (ngSubmit)="navigate()" #loginForm="ngForm" novalidate>
+    <div class="mb-3 text-end">
+      <label for="email" class="form-label fw-bold">البريد الإلكتروني</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="example@email.com"
+        [(ngModel)]="email"
+        name="email"
+        required
+        email
+      />
+    </div>
+
+    <div class="mb-3 text-end">
+      <label for="password" class="form-label fw-bold">كلمة المرور</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        placeholder="********"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
+    </div>
+
+    <div *ngIf="errorMsg" class="alert alert-danger text-end">{{ errorMsg }}</div>
+
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary fw-bold" [disabled]="!loginForm.form.valid">
+        تسجيل الدخول
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,22 @@
+<h3 class="text-center text-primary fw-bold my-4">النسبة المئوية للحضور والغياب</h3>
+
+<table class="table table-bordered text-center attendance-table">
+  <thead>
+    <tr>
+      <th>الطالب</th>
+      <th>أيام الحضور</th>
+      <th>أيام الغياب</th>
+      <th>نسبة الحضور</th>
+      <th>نسبة الغياب</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of students">
+      <td>{{ student.name }}</td>
+      <td>{{ student.daysPresent }}</td>
+      <td>{{ student.daysAbsent }}</td>
+      <td class="present">{{ student.presentPercent }}%</td>
+      <td class="absent">{{ student.absentPercent }}%</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,73 @@
+<div class="container my-4">
+  <h2 class="text-center text-primary mb-2">القاعة {{ classroomNumber }} - حضور وغياب الطلاب</h2>
+
+  <p class="text-center text-muted mb-4" *ngIf="attendanceDate">
+    التاريخ: {{ attendanceDate | date:'fullDate' }}
+  </p>
+
+  <div class="row g-4 justify-content-center">
+
+    <!-- جدول الطلاب الحاضرين -->
+    <div class="col-md-5">
+      <div class="card shadow border-success">
+        <div class="card-header bg-success text-white fw-bold">الطلاب الحاضرون</div>
+        <div class="card-body p-0">
+          <table class="table mb-0 table-bordered table-striped text-center">
+            <thead class="table-success">
+              <tr>
+                <th>#</th>
+                <th>اسم الطالب</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="loading">
+                <td colspan="2">جاري تحميل البيانات...</td>
+              </tr>
+              <tr *ngIf="!loading && presentStudents.length === 0">
+                <td colspan="2">لا يوجد طلاب حاضرين.</td>
+              </tr>
+              <tr *ngFor="let student of presentStudents; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ student }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- جدول الطلاب الغائبين -->
+    <div class="col-md-5">
+      <div class="card shadow border-danger">
+        <div class="card-header bg-danger text-white fw-bold">الطلاب الغائبون</div>
+        <div class="card-body p-0">
+          <table class="table mb-0 table-bordered table-striped text-center">
+            <thead class="table-danger">
+              <tr>
+                <th>#</th>
+                <th>اسم الطالب</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="loading">
+                <td colspan="2">جاري تحميل البيانات...</td>
+              </tr>
+              <tr *ngIf="!loading && absentStudents.length === 0">
+                <td colspan="2">لا يوجد طلاب غائبين.</td>
+              </tr>
+              <tr *ngFor="let student of absentStudents; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ student }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger text-center mt-3">
+    {{ error }}
+  </div>
+</div>

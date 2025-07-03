@@ -1,0 +1,28 @@
+<div class="container mt-5">
+  <h2 class="text-center text-primary mb-4">رفع أسماء الطلبة وتحديد القاعة</h2>
+
+  <form (submit)="saveData($event)" class="border p-4 shadow rounded" novalidate>
+    <!-- اختيار رقم القاعة -->
+    <div class="mb-3">
+      <label for="classroom" class="form-label fw-bold">اختر القاعة:</label>
+      <select class="form-select" id="classroom" required>
+        <option value="" disabled selected>اختر القاعة...</option>
+        <option value="1">قاعة 1</option>
+        <option value="2">قاعة 2</option>
+        <option value="3">قاعة 3</option>
+      </select>
+    </div>
+
+    <!-- رفع أسماء الطلبة -->
+    <div class="mb-3">
+      <label for="studentsNames" class="form-label fw-bold">أدخل أسماء الطلبة (كل طالب في سطر):</label>
+      <textarea class="form-control" id="studentsNames" rows="6" placeholder="اكتب أسماء الطلبة هنا..." required></textarea>
+    </div>
+
+    <!-- زر الرفع -->
+    <div class="text-center">
+      <button type="submit" class="btn btn-success">رفع الأسماء</button>
+    </div>
+  </form>
+
+</div>

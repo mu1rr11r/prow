@@ -1,0 +1,49 @@
+<div class="container mt-5" style="max-width: 400px;">
+  <h2 class="text-center mb-4 text-primary fw-bold">تسجيل دخول المشرف</h2>
+
+  <form (ngSubmit)="login()" #loginForm="ngForm" novalidate>
+    <div class="mb-3 text-end">
+      <label for="email" class="form-label fw-bold">البريد الإلكتروني</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="example@email.com"
+        [(ngModel)]="email"
+        name="email"
+        required
+        email
+        #emailRef="ngModel"
+      />
+      <div *ngIf="emailRef.invalid && emailRef.touched" class="text-danger text-end mt-1">
+        <small *ngIf="emailRef.errors?.['required']">الإيميل مطلوب</small>
+        <small *ngIf="emailRef.errors?.['email']">صيغة الإيميل غير صحيحة</small>
+      </div>
+    </div>
+
+    <div class="mb-3 text-end">
+      <label for="password" class="form-label fw-bold">كلمة المرور</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        placeholder="********"
+        [(ngModel)]="password"
+        name="password"
+        required
+        #passwordRef="ngModel"
+      />
+      <div *ngIf="passwordRef.invalid && passwordRef.touched" class="text-danger text-end mt-1">
+        <small *ngIf="passwordRef.errors?.['required']">كلمة المرور مطلوبة</small>
+      </div>
+    </div>
+
+    <div *ngIf="errorMsg" class="alert alert-danger text-end">{{ errorMsg }}</div>
+
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary fw-bold" [disabled]="!loginForm.form.valid">
+        تسجيل الدخول
+      </button>
+    </div>
+  </form>
+</div>

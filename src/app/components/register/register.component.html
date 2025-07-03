@@ -1,0 +1,102 @@
+<form #registerForm="ngForm" (ngSubmit)="register()" novalidate>
+    <h2 class="text-center mb-4 text-primary fw-bold">تسجيل دخول </h2>
+
+  <!-- الاسم الكامل -->
+  <div class="mb-3 text-end">
+    <label for="fullName" class="form-label">الاسم الكامل</label>
+    <input
+      type="text"
+      class="form-control"
+      id="fullName"
+      placeholder="أدخل اسمك الكامل"
+      [(ngModel)]="fullName"
+      name="fullName"
+      required
+      minlength="2"
+      maxlength="60"
+      #fullNameRef="ngModel"
+    />
+    <div *ngIf="fullNameRef.invalid && fullNameRef.touched" class="text-danger text-end mt-1">
+      <small *ngIf="fullNameRef.errors?.['required']">الاسم مطلوب</small>
+      <small *ngIf="fullNameRef.errors?.['minlength']">الاسم لا يقل عن حرفين</small>
+      <small *ngIf="fullNameRef.errors?.['maxlength']">الاسم لا يزيد عن 60 حرفًا</small>
+    </div>
+  </div>
+
+  <!-- البريد الإلكتروني -->
+  <div class="mb-3 text-end">
+    <label for="email" class="form-label">البريد الإلكتروني</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      placeholder="example@email.com"
+      [(ngModel)]="email"
+      name="email"
+      required
+      email
+      #emailRef="ngModel"
+    />
+    <div *ngIf="emailRef.invalid && emailRef.touched" class="text-danger text-end mt-1">
+      <small *ngIf="emailRef.errors?.['required']">الإيميل مطلوب</small>
+      <small *ngIf="emailRef.errors?.['email']">صيغة الإيميل غير صحيحة</small>
+    </div>
+  </div>
+
+  <!-- كلمة المرور -->
+  <div class="mb-3 text-end">
+    <label for="password" class="form-label">كلمة المرور</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password"
+      placeholder="********"
+      [(ngModel)]="password"
+      name="password"
+      required
+      pattern="^[A-Z]{1}[0-9]{6}$"
+      #passwordRef="ngModel"
+    />
+    <div *ngIf="passwordRef.invalid && passwordRef.touched" class="text-danger text-end mt-1">
+      <small *ngIf="passwordRef.errors?.['required']">كلمة المرور مطلوبة</small>
+      <small *ngIf="passwordRef.errors?.['pattern']">
+        كلمة المرور يجب أن تبدأ بحرف كبير متبوع بـ 6 أرقام فقط
+      </small>
+    </div>
+  </div>
+
+  <!-- تأكيد كلمة المرور -->
+  <div class="mb-3 text-end">
+    <label for="confirmPassword" class="form-label">تأكيد كلمة المرور</label>
+    <input
+      type="password"
+      class="form-control"
+      id="confirmPassword"
+      placeholder="********"
+      [(ngModel)]="confirmPassword"
+      name="confirmPassword"
+      required
+      #confirmPasswordRef="ngModel"
+    />
+    <div *ngIf="(confirmPasswordRef.touched || confirmPasswordRef.dirty) && confirmPassword !== password" class="text-danger text-end mt-1">
+      <small>كلمة التأكيد غير متطابقة مع كلمة المرور</small>
+    </div>
+    <div *ngIf="confirmPasswordRef.invalid && confirmPasswordRef.touched && confirmPasswordRef.errors?.['required']" class="text-danger text-end mt-1">
+      <small>تأكيد كلمة المرور مطلوب</small>
+    </div>
+  </div>
+
+  <div *ngIf="errorMsg" class="alert alert-danger text-end">{{ errorMsg }}</div>
+
+  <div class="d-grid gap-2">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="
+        registerForm.invalid || confirmPassword !== password
+      "
+    >
+      تسجيل حساب جديد
+    </button>
+  </div>
+</form>

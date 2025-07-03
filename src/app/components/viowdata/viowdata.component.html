@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <h3 class="text-center mb-4">قائمة المشرفين</h3>
+
+  <div *ngIf="supervisors.length === 0" class="alert alert-info text-center">
+    لا يوجد مشرفين حالياً.
+  </div>
+
+  <div class="table-responsive" *ngIf="supervisors.length > 0">
+    <table class="table table-striped table-bordered text-center align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>الاسم الكامل</th>
+          <th>البريد الإلكتروني</th>
+          <th>حذف</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of supervisors">
+          <td>{{ user.fullName }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deleteSupervisor(user.uid)">حذف</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

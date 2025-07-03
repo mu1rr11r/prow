@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+  <div class="container-fluid">
+    <!-- شعار النظام على الشمال -->
+    <a class="navbar-brand fw-bold" href="#">نظام الغياب</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="تبديل التنقل">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- القوائم على اليمين -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="deshborde">لوحة الإدارة</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="re1">رفع الأسماء</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="seting">نسبه الحضور</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="mr1">المدرسين</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="hallsDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            القاعات
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="hallsDropdown">
+            <li><a class="dropdown-item" routerLink="ke1">القاعة 1</a></li>
+            <li><a class="dropdown-item" routerLink="ke2">القاعة 2</a></li>
+            <li><a class="dropdown-item" routerLink="ke3">القاعة 3</a></li>
+          </ul>
+        </li>
+
+        <!-- زر تسجيل الخروج -->
+        <li class="nav-item">
+          <button class="btn btn-danger ms-3" (click)="logout()">تسجيل خروج</button>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>

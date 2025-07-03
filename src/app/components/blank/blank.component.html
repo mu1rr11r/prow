@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow position-relative">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <!-- شعار النظام على الشمال -->
+    <a class="navbar-brand fw-bold fs-4" href="#">نظام الغياب</a>
+
+    <!-- زر القائمة عند الشاشات الصغيرة -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="تبديل التنقل">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- القوائم على اليمين -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav mb-2 mb-lg-0 fs-5">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="mr1">المدرسين</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="hallsDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            القاعات
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="hallsDropdown">
+            <li><a class="dropdown-item" routerLink="ke1">القاعة 1</a></li>
+            <li><a class="dropdown-item" routerLink="ke2">القاعة 2</a></li>
+            <li><a class="dropdown-item" routerLink="ke3">القاعة 3</a></li>
+          </ul>
+        </li>
+
+        <!-- زر تسجيل الخروج -->
+        <li class="nav-item">
+          <button class="btn btn-danger btn-sm ms-3" (click)="logout()">تسجيل خروج</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- النص في المنتصف بشكل مطلق -->
+  <span class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4">خاص بالمشرفين</span>
+</nav>

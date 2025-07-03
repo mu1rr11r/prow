@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow position-relative">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <!-- شعار النظام -->
+    <a class="navbar-brand fw-bold fs-4" href="#">نظام الغياب</a>
+
+    <!-- زر القائمة للشاشات الصغيرة -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="تبديل التنقل">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- القائمة الرئيسية -->
+    <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarNav">
+      <ul class="navbar-nav mb-2 mb-lg-0 fs-5">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-warning fw-bold" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            تسجيل الدخول
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+            <li><a class="dropdown-item" routerLink="login">تسجيل دخول مشرف</a></li>
+            <li><a class="dropdown-item" routerLink="loginms">تسجيل دخول مدير</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- زر إنشاء حساب منفصل بجانب القائمة -->
+      <a class="btn btn-success ms-3 fw-bold" routerLink="register">إنشاء حساب</a>
+    </div>
+  </div>
