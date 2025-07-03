@@ -26,20 +26,19 @@ export class ViowdataComponent implements OnInit {
     this.getSupervisors();
   }
 
-  async getSupervisors() {
-    try {
-      const usersRef = collection(this.firestore, 'users');
-      const q = query(usersRef, where('role', '==', 'supervisor'));
-
-      const querySnapshot = await getDocs(q);
-      this.supervisors = querySnapshot.docs.map(doc => ({
-        uid: doc.id,
-        ...doc.data()
-      }));
-    } catch (error) {
-      console.error('Error fetching supervisors:', error);
-    }
+async getSupervisors() {
+  try {
+    const usersRef = collection(this.firestore, 'users');
+    const querySnapshot = await getDocs(usersRef);
+    this.supervisors = querySnapshot.docs.map(doc => ({
+      uid: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error('Error fetching users:', error);
   }
+}
+
 
   async deleteSupervisor(uid: string) {
     try {
