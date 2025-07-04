@@ -1,48 +1,27 @@
-<div class="container mt-4">
-  <h2 class="text-center text-primary mb-4">
-    تسجيل الحضور - {{ classroomName }}
-  </h2>
+<div class="container my-4">
+  <h3 class="text-center mb-3">تسجيل الحضور - القاعة {{ classroomNumber }}</h3>
 
-  <p class="text-center fst-italic">
-    التاريخ الحالي: {{ today | date:'fullDate' }}
-  </p>
-
-  <!-- اختيار التاريخ -->
-  <div class="mb-3 text-center">
-    <label for="attendanceDate" class="form-label fw-bold">تاريخ الحضور:</label>
-    <input
-      type="date"
-      id="attendanceDate"
-      class="form-control w-25 mx-auto"
-      [(ngModel)]="attendanceDate"
-      name="attendanceDate"
-      required
-    />
+  <div class="mb-3">
+    <label class="form-label">تاريخ الحضور:</label>
+    <input type="date" [(ngModel)]="attendanceDate" class="form-control" />
   </div>
 
-  <table class="table table-bordered text-center" *ngIf="!loading; else loadingTpl">
-    <thead class="table-primary">
+  <table class="table table-bordered text-center">
+    <thead>
       <tr>
-        <th>اسم الطالب</th>
-        <th>حضور</th>
-        <th>غياب</th>
+        <th>الاسم</th>
+        <th>حاضر</th>
+        <th>غائب</th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        *ngFor="let student of students; let i = index"
-        [ngClass]="{
-          'table-success': student.present,
-          'table-danger': student.absent
-        }"
-      >
+      <tr *ngFor="let student of students">
         <td>{{ student.name }}</td>
         <td>
           <input
             type="checkbox"
             [(ngModel)]="student.present"
             (change)="onAttendanceChange(student, true)"
-            name="present{{ i }}"
           />
         </td>
         <td>
@@ -50,22 +29,13 @@
             type="checkbox"
             [(ngModel)]="student.absent"
             (change)="onAttendanceChange(student, false)"
-            name="absent{{ i }}"
           />
         </td>
       </tr>
     </tbody>
   </table>
 
-  <ng-template #loadingTpl>
-    <p class="text-center">جاري تحميل البيانات...</p>
-  </ng-template>
-
-  <div *ngIf="!loading && students.length === 0" class="text-center mt-4 text-danger">
-    لا يوجد طلاب للعرض.
-  </div>
-
-  <div class="text-center my-4" *ngIf="students.length > 0">
-    <button class="btn btn-success" (click)="saveData()">حفظ البيانات</button>
-  </div>
+  <button class="btn btn-primary" (click)="saveData()" [disabled]="loading">
+    حفظ الحضور
+  </button>
 </div>

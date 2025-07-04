@@ -1,21 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  Firestore,
-  collection,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  DocumentReference,
-} from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Database, ref, set } from '@angular/fire/database';
 
 interface StudentAttendance {
   name: string;
   present: boolean;
   absent: boolean;
-  docRef: DocumentReference;
 }
 
 @Component({
@@ -27,59 +18,36 @@ interface StudentAttendance {
 })
 export class Ke2Component implements OnInit {
   students: StudentAttendance[] = [];
-  classroomName: string = 'القاعة 2';
+  classroomNumber: string = '2';
   loading: boolean = false;
   today: Date = new Date();
   attendanceDate: string = '';
 
-  constructor(private firestore: Firestore) {}
+  constructor(private db: Database) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.today = new Date();
     this.attendanceDate = this.today.toISOString().substring(0, 10); // yyyy-mm-dd
-    await this.loadStudents();
+    this.loadStudents();
   }
 
-  async loadStudents() {
-    this.loading = true;
-    try {
-      const classroomsRef = collection(this.firestore, 'classrooms');
-      const q = query(classroomsRef, where('classroom', '==', '2'));
-      const querySnapshot = await getDocs(q);
+  loadStudents() {
+    // مثال لملء الطلاب مبدئيًا (يمكنك تعديلها لجلب بيانات حقيقية من مكان آخر)
+    this.students = [
+      { name: 'أحمد علي', present: false, absent: false },
+      { name: 'محمود محمد', present: false, absent: false },
+            { name: 'محمود محمد', present: false, absent: false },
+      { name: 'ابراهيم محمد', present: false, absent: false },
+      { name: 'عمر محمد', present: false, absent: false },
+      { name: 'خالد علي ', present: false, absent: false },
+      { name: 'علي  محمد', present: false, absent: false },
+      { name: 'مصعب محمد', present: false, absent: false },
+      { name: 'عبدالرحمن محمد', present: false, absent: false },
+      { name: 'امير حمزه', present: false, absent: false },
+      { name: 'محمد محمد', present: false, absent: false },
+      { name: 'علي محمد', present: false, absent: false },
 
-      this.students = [];
-
-      if (querySnapshot.empty) {
-        console.warn('لا يوجد مستندات تطابق الشرط.');
-      } else {
-        querySnapshot.forEach((doc) => {
-          const data = doc.data() as {
-            students?: string[];
-            attendance?: { name: string; present: boolean; absent: boolean }[];
-          };
-          const docRef = doc.ref;
-
-          if (Array.isArray(data.students)) {
-            const newStudents = data.students.map((name) => {
-              const att = data.attendance?.find((a) => a.name === name);
-              return {
-                name,
-                present: att ? att.present : false,
-                absent: att ? att.absent : false,
-                docRef,
-              };
-            });
-
-            this.students = this.students.concat(newStudents);
-          }
-        });
-      }
-    } catch (error) {
-      console.error('خطأ في جلب البيانات من Firestore:', error);
-      this.students = [];
-      this.classroomName = '';
-    }
-    this.loading = false;
+    ];
   }
 
   onAttendanceChange(student: StudentAttendance, isPresentChecked: boolean) {
@@ -102,33 +70,30 @@ export class Ke2Component implements OnInit {
     }
 
     this.loading = true;
+
     try {
-      const studentsByDoc = new Map<DocumentReference, StudentAttendance[]>();
+      const attendanceRef = ref(
+        this.db,
+        `classrooms/classroom-${this.classroomNumber}/attendanceLogs/${this.attendanceDate}`
+      );
 
-      this.students.forEach((student) => {
-        const arr = studentsByDoc.get(student.docRef) || [];
-        arr.push(student);
-        studentsByDoc.set(student.docRef, arr);
-      });
-
-      for (const [docRef, students] of studentsByDoc.entries()) {
-        const attendanceData = students.map((s) => ({
+      const attendanceData = {
+        attendanceDate: this.attendanceDate,
+        attendance: this.students.map((s) => ({
           name: s.name,
           present: s.present,
           absent: s.absent,
-        }));
+        })),
+      };
 
-        await updateDoc(docRef, {
-          attendance: attendanceData,
-          attendanceDate: this.attendanceDate,
-        });
-      }
+      await set(attendanceRef, attendanceData);
 
-      alert('تم حفظ بيانات الحضور والغياب بنجاح.');
+      alert('✅ تم حفظ بيانات الحضور بنجاح في Realtime Database.');
     } catch (error) {
-      console.error('خطأ أثناء حفظ البيانات:', error);
-      alert('حدث خطأ أثناء حفظ البيانات.');
+      console.error('❌ خطأ أثناء الحفظ:', error);
+      alert('❌ حدث خطأ أثناء حفظ البيانات.');
     }
+
     this.loading = false;
   }
 }

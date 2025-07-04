@@ -5,11 +5,14 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 
 import { routes } from './app.routes';
 
+// Firebase imports
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideDatabase, getDatabase } from '@angular/fire/database'; // ✅ Realtime DB
 
-import { environment } from '../app/core/environment/environment';  // صحح المسار حسب مشروعك
+// بيئة المشروع
+import { environment } from './core/environment/environment'; // صحح المسار لو مختلف
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,10 +20,12 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(withFetch()),
 
+    // ✅ مزودي Firebase
     importProvidersFrom(
       provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideAuth(() => getAuth()),
-      provideFirestore(() => getFirestore())
+      provideFirestore(() => getFirestore()),
+      provideDatabase(() => getDatabase()) // ✅ Realtime Database
     )
   ]
 };
